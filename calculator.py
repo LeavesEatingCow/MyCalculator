@@ -28,34 +28,32 @@ class Calculator:
         num1 = self.operands.pop()
         num2 = self.operands.pop()
 
-        if num1 == 0:
-            raise ZeroDivisionError()
-
-        self.operands.append(num2 / num1)
+        try:
+            self.operands.append(num2 / num1)
+        except ZeroDivisionError:
+            print('Can\'t divide by 0!')
 
     def mod(self):
         num1 = self.operands.pop()
         num2 = self.operands.pop()
 
-        if num1 == 0:
-            raise ZeroDivisionError()
-
-        self.operands.append(num2 % num1)
+        try:
+            self.operands.append(num2 % num1)
+        except ZeroDivisionError:
+            print('Can\'t divide by 0!')
 
     def evaluate(self):
+        order_of_op1 = {'*': self.mult, '/': self.div, '%': self.mod}
+        order_of_op2 = {'+': self.add, '-': self.sub}
+
         while self.operations:
             operation = self.operations.pop()
 
-            if operation == '+':
-                self.add()
-            if operation == '-':
-                self.minus()
-            if operation == '*':
-                self.mult()
-            if operation == '/':
-                self.div()
-            if operation == '%':
-                self.mod()
+            if operation in order_of_op1:
+                order_of_op1.get(operation)()
+            elif operation in order_of_op2:
+                order_of_op2.get(operation)()
+
 
 
 
